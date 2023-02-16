@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>input</title>
+    <link rel="stylesheet" href="unput.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form class="input">
+        <h3>To-Do List</h3>
+        <input id="kaki" type="text" placeholder="Add to-do item" />
+        <br />
+        <h3>Deadline :</h3>
+        <input id="tangan" type="date" />
+        <br />
+        <button onclick="tambahlist()">submit</button>
+      </form>
+      <table>
+        <tr>
+          <th>activity/target</th>
+          <th>Deadline</th>
+          <th>time left</th>
+          <th>delete</th>
+        </tr>
+        <tbody id="perut"></tbody>
+      </table>
+    </div>
+    <script>
+      const kaki = document.getElementById("kaki");
+      const tangan = document.getElementById("tangan");
+      const perut = document.getElementById("perut");
+      const date = new Date();
+      const tahun = date.getFullYear();
+      const bulan = (date.getMonth() + 1).toString().padStart(2, "0");
+      const tanggal = date.getDate().toString().padStart(2, "0");
+      tangan.min = `${tahun}-${bulan}-${tanggal}`;
+      function tambahlist() {
+        event.preventDefault();
+        if (kaki.value == "" || tangan.value == "") {
+          return alert("woiii");
+        }
+        const deadline = new Date(tangan.value);
+        const sisawkt = (deadline - date) / 1000 / 60 / 60 / 24;
+        perut.innerHTML += `          <tr>
+                  <td>${kaki.value}</td>
+                  <td>${tangan.value}</td>
+                  <td>${sisawkt.toFixed(0)}</td>
+                  <td style="cursor:pointer" onclick="hapus(this)">x</td>
+                </tr>
+      `;
+        document.getElementsByTagName("form")[0].reset();
+      }
+      function hapus(element) {
+        element.parentElement.remove();
+      }
+    </script>
+  </body>
+</html>
